@@ -7,67 +7,83 @@
         // short lasting messages
         showToast_shortTop: function () {
             if (!this.checkSimulator()) {
-	            window.plugins.toast.showShortTop('This talk is boring', this.onSuccess, this.onError);
+                window.plugins.toast.showShortTop('This talk is boring', this.onSuccess, this.onError);
             }
         },
-        
+
         showToast_shortCenter: function () {
             if (!this.checkSimulator()) {
-	            window.plugins.toast.showShortCenter('Yeah is there another room?', this.onSuccess, this.onError);
+                window.plugins.toast.showShortCenter('Yeah is there another room?', this.onSuccess, this.onError);
             }
         },
 
         showToast_shortBottom: function () {
             if (!this.checkSimulator()) {
-	            window.plugins.toast.showShortBottom('I\'m staying, this guy is awesome!', this.onSuccess, this.onError);
+                window.plugins.toast.showShortBottom('I\'m staying, this guy is awesome!', this.onSuccess, this.onError);
             }
         },
 
         // longer lasting messages
         showToast_longTop: function () {
             if (!this.checkSimulator()) {
-	            window.plugins.toast.showLongTop('Booooooooooring! Boring boring boring', this.onSuccess, this.onError);
+                window.plugins.toast.showLongTop('Booooooooooring! Boring boring boring', this.onSuccess, this.onError);
             }
         },
-        
+
         showToast_longCenter: function () {
             if (!this.checkSimulator()) {
-	            window.plugins.toast.showLongCenter('Yeah - let\'s grab some coffee', this.onSuccess, this.onError);
+                window.plugins.toast.showLongCenter('Yeah - let\'s grab some coffee', this.onSuccess, this.onError);
             }
         },
 
         showToast_longBottom: function () {
             if (!this.checkSimulator()) {
-                window.plugins.toast.showLongBottom('I apologize for my fellow Toasts', this.onSuccess, this.onError);
+
+                window.plugins.toast.showWithOptions({
+                        message: "hey there",
+                        duration: "short",
+                        position: "bottom"
+                    },
+                    function (result) {
+                        if (result && result.event) {
+                            console.log("The toast was tapped");
+                            console.log("Event: " + result.event);
+                            console.log("Message: " + result.message);
+                        } else {
+                            console.log("The toast has been shown");
+                        }
+                    }
+                );
+
             }
         },
 
         showToast_LongBottomMin40px: function () {
             if (!this.checkSimulator()) {
-              	window.plugins.toast.showWithOptions(
-                  {
-                    message: "I'm positioned a bit higher",
-                    duration: "long",
-                    position: "bottom",
-                    addPixelsY: -40
-                  },
-                  this.onSuccess,
-                  this.onError
-            )}
+                window.plugins.toast.showWithOptions({
+                        message: "I'm positioned a bit higher",
+                        duration: "long",
+                        position: "bottom",
+                        addPixelsY: -40
+                    },
+                    this.onSuccess,
+                    this.onError
+                )
+            }
         },
 
         showToast_LongBottomPlus30px: function () {
             if (!this.checkSimulator()) {
-              	window.plugins.toast.showWithOptions(
-                  {
-                    message: "I'm positioned a bit lower",
-                    duration: "long",
-                    position: "bottom",
-                    addPixelsY: 30
-                  },
-                  this.onSuccess,
-                  this.onError
-            )}
+                window.plugins.toast.showWithOptions({
+                        message: "I'm positioned a bit lower",
+                        duration: "long",
+                        position: "bottom",
+                        addPixelsY: 30
+                    },
+                    this.onSuccess,
+                    this.onError
+                )
+            }
         },
 
         hideToast: function () {
@@ -76,7 +92,7 @@
             }
         },
 
-        checkSimulator: function() {
+        checkSimulator: function () {
             if (window.navigator.simulator === true) {
                 alert('This plugin is not available in the simulator.');
                 return true;
@@ -89,11 +105,11 @@
         },
 
         // callbacks
-        onSuccess: function(msg) {
+        onSuccess: function (msg) {
             console.log('Toast shown: ' + msg);
         },
 
-        onError: function(msg) {
+        onError: function (msg) {
             alert('Toast error: ' + msg);
         }
     });
